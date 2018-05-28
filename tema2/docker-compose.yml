@@ -1,0 +1,50 @@
+version: '2.1'
+
+services:
+    rt1:
+        image: tema1:latest
+        volumes:
+            - .:/elocal
+        tty: true
+        networks:
+            - dmz
+            - net
+        command: "python /elocal/laborator2/src/udp_client.py"
+        
+    rt2:
+        image: tema1:latest
+        volumes:
+            - .:/elocal
+        tty: true
+        networks:
+            - dmz
+    rt3:
+        image: tema1:latest
+        volumes:
+            - .:/elocal
+        tty: true
+        networks:
+            - dmz
+        command: "python /elocal/laborator2/src/udp_server.py"    
+    rt4:
+        image: tema1:latest
+        volumes:
+            - .:/elocal
+        tty: true
+        networks:
+            - net
+   
+networks:
+    dmz: 
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.111.111.0/16 
+                  gateway: 172.111.111.1
+    net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 198.13.13.0/16
+                  gateway: 198.13.13.1
+    
